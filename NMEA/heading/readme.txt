@@ -1,0 +1,1 @@
+This directory holds NMEA logfiles from the heading sensor
