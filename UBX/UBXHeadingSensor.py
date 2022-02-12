@@ -16,13 +16,16 @@ import sys
 
 # Utilities used by all UBX tools
 import ubx.Sensors
-from ubx.Utilities import ubx_crc, log_file_name, path_name
+from ubx.Utilities import ubx_crc, log_file_name, path_name, udp_sender
 from ubx.UBXParser import UBXParser
 
-print('***** UBX Sensor *****')
-print('Accepts UBX from a serial port:')
-print('1. Extracts information and logs')
-print('2. Outputs to an IP address/port for other applications to use.')
+# Get the NMEA sentence class
+from nmea.hdt import hdt
+myHDT = hdt()
+
+# Set UDP multicast information
+MCAST_GRP = '224.1.1.1'
+MCAST_PORT = 5003
 
 # Instantiate an object to parse UBX
 myUBX = UBXParser()
@@ -32,6 +35,11 @@ myUBX = UBXParser()
 ubx_log_file = '/home/pi/UBlox/logfiles/' + log_file_name('.ubx')
 
 print(f'Logging as {ubx_log_file}')
+
+print('***** UBX Sensor *****')
+print('Accepts UBX from a serial port:')
+print('1. Extracts information and logs')
+print('2. Outputs HEADING to a multicast address 224.1.1.1:5003 for other applications to use.')
 
 
 # Main Loop
@@ -91,35 +99,20 @@ try:
                         # Parse
                         myUBX.ubx_parser(byte3, byte4, ubx_payload)
                         # Now see if there are new values
+                        if myUBX.new_heading:
+                            # Get the heading as a float and round to two places
+                            heading = round(myUBX.heading, 4)
+                            # Convert heading from float to string
+                            heading_string = str(heading)
+                            # Create a NMEA sentence
+                            nmea_full_hdt = myHDT.create(heading_string)
+                            print(nmea_full_hdt)
+                            # Processed the old heading, reset the flag
+                            myUBX.new_heading = 0
+                            # Send the heading to a multicast address
+                            udp_sender(MCAST_GRP, MCAST_PORT, bytes(nmea_full_hdt, 'utf-8'))
                     else:
                         print('Bad CRC')
-
-            # Check for NMEA0183, leading with a $ symbol
-            elif byte1 == b"\x24":
-                nmea_full_bytes = Serial_Port1.readline()
-                nmea_full_string = nmea_full_bytes.decode("utf-8")
-                print(f'NMEA: Received {nmea_full_string[0:5]}')
-
-            # Check for AIS, leading with a ! symbol
-            elif byte1 == b"\x21":
-                nmea_full_bytes = Serial_Port1.readline()
-                nmea_full_string = nmea_full_bytes.decode("utf-8")
-                print(f'AIS: Received {nmea_full_string[0:5]}')
-
-            # Check for RTCM corrections
-            elif byte1 == b"\xd3":
-                # Find the message length
-                byte2and3 = Serial_Port1.read(2)
-                # The first 6 bits are reserved, but always zero, so convert the first two bytes directly to int
-                length_of_payload = int.from_bytes(byte2and3, "big", signed=False)
-                # Read the payload from the buffer
-                rtcm_payload = Serial_Port1.read(length_of_payload)
-                # Locate the message ID and convert it to an INT, its 12 bits of 16 so divide by 16
-                message_id_bytes = rtcm_payload[0:2]
-                message_id_int = int.from_bytes(message_id_bytes, "big") / 16
-                print(f'RTCM3: Received {str(message_id_int)}')
-                # Finally extract the RTCM CRC
-                rtcm_crc = Serial_Port1.read(3)
             else:
                 print(f"What is {byte1}")
 

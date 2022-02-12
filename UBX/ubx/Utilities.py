@@ -4,6 +4,14 @@ Utilities for UBX sentences.
 
 from datetime import datetime
 import sys
+import socket
+
+
+def udp_sender(MCAST_GRP, MCAST_PORT, message):
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 32)
+    sock.sendto(message, (MCAST_GRP, MCAST_PORT))
 
 
 def path_name():
