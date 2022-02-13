@@ -1,5 +1,7 @@
 import serial
 import sys
+
+# Utilities for any NMEA script
 from nmea.utilities import mc_sender, ip_validator
 
 # Utilities used for file handling and logging
