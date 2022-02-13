@@ -1,6 +1,6 @@
 import serial
 import sys
-from nmea.utilities import mc_sender
+from nmea.utilities import mc_sender, ip_validator
 
 # Utilities used for file handling and logging
 from utilities.file import log_file_name as log_file_name
@@ -12,16 +12,17 @@ MCAST_GRP = settings.NMEABASESENSOR["MCAST_GROUP"]
 MCAST_PORT = settings.NMEABASESENSOR["MCAST_PORT"]
 SERIAL_DEVICE = settings.NMEABASESENSOR["SERIAL_DEVICE"]
 MY_IPv4_ADDRESS = settings.NMEABASESENSOR["MY_IPv4_ADDRESS"]
+ip_validator(MY_IPv4_ADDRESS)
 
 # NMEA Log File
 nmea_log_file_name = './base/' + log_file_name('.nmea')
 # Open the file for append
 nmea_output_file = open(nmea_log_file_name, 'a', newline='')
 
-print('***** NMEA Moving Base Sensor *****')
+print(f'***** {this_programme} with an adpater address of {MY_IPv4_ADDRESS} *****')
 print('Accepts NMEA from a serial port:')
 print('1. Extracts information and logs raw NMEA')
-print('2. Outputs to a multicast address 224.1.1.1:5001 for other applications to use.')
+print(f'2. Outputs to a multicast address {MCAST_GRP}:{MCAST_PORT} for other applications to use.')
 
 try:
     with serial.Serial(SERIAL_DEVICE) as serial_port:
@@ -44,8 +45,8 @@ try:
                 # Check for corrupted lines
                 if nmea_full_string.isascii():
                     nmea_output_file.writelines(nmea_full_string)
-                    mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, nmea_full_bytes)
-
+                    # Send a multicast of the sentence
+                    mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
                     # Force OS to write each line, not to buffer
                     nmea_output_file.flush()
                     print(f'NMEA: Received {nmea_full_string.strip()}')
