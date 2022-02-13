@@ -1,4 +1,4 @@
-from utilities import calculate_crc
+from nmea.utilities import calculate_crc
 
 # HDT - Heading - True
 # Actual vessel heading in degrees true produced by any device or system producing true heading.
@@ -12,7 +12,7 @@ class hdt():
     # Constructor
     def __init__(self):
         # Switch this on for verbose processing
-        self.debug = 1
+        self.debug = 0
 
     @staticmethod
     def parse(sentence):
