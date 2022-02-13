@@ -1,4 +1,4 @@
-from ubx.Utilities import itow
+from ubx.utilities import itow
 
 def posllh(ubx_payload):
     '''

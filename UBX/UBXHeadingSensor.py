@@ -16,31 +16,35 @@ import sys
 
 # Utilities used by all UBX tools
 import ubx.Sensors
-from ubx.Utilities import ubx_crc, log_file_name, path_name, udp_sender
+from ubx.utilities import ubx_crc, log_file_name, mc_sender, ip_validator
 from ubx.UBXParser import UBXParser
+
+# Get all the settings for this programme
+import settings.sensors as settings
+this_programme = settings.UBXHEADINGSENSOR['PROG']
+MCAST_GRP = settings.UBXHEADINGSENSOR["MCAST_GROUP"]
+MCAST_PORT = settings.UBXHEADINGSENSOR["MCAST_PORT"]
+SERIAL_DEVICE = settings.UBXHEADINGSENSOR["SERIAL_DEVICE"]
+MY_IPv4_ADDRESS = settings.UBXHEADINGSENSOR["MY_IPv4_ADDRESS"]
+ip_validator(MY_IPv4_ADDRESS)
 
 # Get the NMEA sentence class
 from nmea.hdt import hdt
 myHDT = hdt()
 
-# Set UDP multicast information
-MCAST_GRP = '224.1.1.1'
-MCAST_PORT = 5003
-
 # Instantiate an object to parse UBX
 myUBX = UBXParser()
 
 # Get a logfile name for UBX
-# ubx_log_file = './logfiles/' + log_file_name('.ubx')
-ubx_log_file = '/home/pi/UBlox/logfiles/' + log_file_name('.ubx')
+ubx_log_file = './logfiles/' + log_file_name('.ubx')
 
+print(f'***** {this_programme} with an adpater address of {MY_IPv4_ADDRESS} *****')
+print(f'Accepts UBX from serial port {SERIAL_DEVICE}')
+print('1. Extracts information and logs raw UBX')
+print(f'2. Outputs to a multicast address {MCAST_GRP}:{MCAST_PORT} for other applications to use.')
 print(f'Logging as {ubx_log_file}')
 
-print('***** UBX Sensor *****')
-print('Accepts UBX from a serial port:')
-print('1. Extracts information and logs')
-print('2. Outputs HEADING to a multicast address 224.1.1.1:5003 for other applications to use.')
-
+exit(0)
 
 # Main Loop
 try:

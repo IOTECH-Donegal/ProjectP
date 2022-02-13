@@ -1,4 +1,4 @@
-from ubx.Utilities import itow
+from utilities import itow
 
 def meas(ubx_payload):
     '''

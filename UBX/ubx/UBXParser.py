@@ -1,9 +1,7 @@
 import sys
-# Unique UBX sentences
-import ubx.Sensors
+
 # Get the message parsers
-from ubx.nav import relposned
-from ubx.nav import posllh
+from ubx.nav import relposned, posllh
 from ubx.sec import uniqid
 
 # Dictionaries of static data

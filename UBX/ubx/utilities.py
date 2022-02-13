@@ -7,6 +7,20 @@ import sys
 import socket
 
 
+def mc_sender(mcast_if_ip, mcast_grp, mcast_port, message):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    s.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(mcast_if_ip))
+    s.sendto(message, (mcast_grp, mcast_port))
+
+
+def ip_validator(IPv4):
+    try:
+        socket.inet_aton(IPv4)
+    except socket.error:
+        print(f'The IP address {IPv4} in the settings does not appear on this computer')
+        exit(-1)
+
+
 def udp_sender(MCAST_GRP, MCAST_PORT, message):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
