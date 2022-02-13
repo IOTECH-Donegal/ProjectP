@@ -1,6 +1,13 @@
 import socket
 
 
+def mc_sender(MCAST_IF_IP, MCAST_GRP, MCAST_PORT, message):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+    s.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(MCAST_IF_IP))
+    message = message.encode('utf-8')
+    s.sendto(message, (MCAST_GRP, MCAST_PORT))
+
+
 def udp_sender(MCAST_GRP, MCAST_PORT, message):
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
