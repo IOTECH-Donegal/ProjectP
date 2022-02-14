@@ -44,8 +44,6 @@ print('1. Extracts information and logs raw UBX')
 print(f'2. Outputs to a multicast address {MCAST_GRP}:{MCAST_PORT} for other applications to use.')
 print(f'Logging as {ubx_log_file}')
 
-exit(0)
-
 # Main Loop
 try:
     print("press [ctrl][c] at any time to exit...")
@@ -114,7 +112,8 @@ try:
                             # Processed the old heading, reset the flag
                             myUBX.new_heading = 0
                             # Send the heading to a multicast address
-                            udp_sender(MCAST_GRP, MCAST_PORT, bytes(nmea_full_hdt, 'utf-8'))
+                            #udp_sender(MCAST_GRP, MCAST_PORT, bytes(nmea_full_hdt, 'utf-8'))
+                            mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_hdt)
                     else:
                         print('Bad CRC')
             else:

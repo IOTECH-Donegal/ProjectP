@@ -22,9 +22,10 @@ nmea_log_file_name = './base/' + log_file_name('.nmea')
 nmea_output_file = open(nmea_log_file_name, 'a', newline='')
 
 print(f'***** {this_programme} with an adpater address of {MY_IPv4_ADDRESS} *****')
-print('Accepts NMEA from a serial port:')
+print(f'Accepts NMEA from serial port {SERIAL_DEVICE}')
 print('1. Extracts information and logs raw NMEA')
 print(f'2. Outputs to a multicast address {MCAST_GRP}:{MCAST_PORT} for other applications to use.')
+print(f'Logging as {nmea_output_file}')
 
 try:
     with serial.Serial(SERIAL_DEVICE) as serial_port:
