@@ -21,7 +21,8 @@ The NMEA code in this project is based on IOTECH/NMEA.
 There are two executables, one for the 
 - Base on multicast port 239.1.1.1:5001
 - Heading sensor on multicast port 239.1.1.1:5002
-They output of different multicast ports, so they can both work simultaneously.
+
+They output on different multicast ports, so they can both work simultaneously.
 
 ## UBX
 The UBlox code in this project is based on IOTECH/UBX.
@@ -29,7 +30,7 @@ Its output is to another multicast port 239.1.1.1:5003
 
 ## RTKLIB
 This project also uses a compiled version of str2str from RTKLIB.
-This provides RTCM from a CORS station.
+This provides RTCM from a CORS station, str2str.sh
 
 
 
