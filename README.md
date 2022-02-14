@@ -1,5 +1,7 @@
 # ProjectP
 Repo for code for a moving base/rover, RTK position and heading sensor.
+There are 5 usable serial ports, most HATs use GPIO 14,15 which is AMA0.
+This is reserved, it will probably be connected to a ZIHATEC RS485 HAT.
 This was tested using Ardusimple ZED-9P based boards.
 The configuration of these boards is stored under the directory UBXZED9P.
 
@@ -7,8 +9,12 @@ The configuration of these boards is stored under the directory UBXZED9P.
 The code here is a combination of functions from several different projects. 
 Unit testing is done in the original repos where this code was extracted from.
 For the moment, I have no plans to add unit tests here.
-
 As an integration test, the data from the three sources was read by a PC using OpenCPN 5.6.
+
+### Wiring
+![img.png](img.png)
+
+
  
 ## NMEA
 The NMEA code in this project is based on IOTECH/NMEA.
