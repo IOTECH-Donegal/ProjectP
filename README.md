@@ -1,8 +1,8 @@
 # ProjectP
 Repo for code for a moving base/rover, RTK position and heading sensor.
-There are 5 usable serial ports, most HATs use GPIO 14,15 which is AMA0.
-This is reserved, it will probably be connected to a ZIHATEC RS485 HAT.
-This was tested using Ardusimple ZED-9P based boards.
+On a RPi4, there are 5 usable serial ports, most HATs use GPIO 14,15 which is AMA0.
+In this project, this is reserved, it will be connected to a ZIHATEC RS485 HAT.
+This project was tested using Ardusimple ZED-9P based boards.
 The configuration of these boards is stored under the directory UBXZED9P.
 
 ### Testing the code
@@ -32,7 +32,7 @@ Its output is to another multicast port 239.1.1.1:5003
 This project also uses a compiled version of str2str from RTKLIB.
 This provides RTCM from a CORS station.
 
-Conversing WAN bandwidth to the boat, str2str also provides a TCPIP NTRIP server to other local devices.
+Conserving WAN bandwidth to the boat, str2str also provides a TCPIP NTRIP server to other local devices.
 
 See str2str.sh for connection details.
 
