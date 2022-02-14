@@ -32,7 +32,7 @@ Its output is to another multicast port 239.1.1.1:5003
 This project also uses a compiled version of str2str from RTKLIB.
 This provides RTCM from a CORS station.
 
-Conversing WAN bandwidth from the boat, str2str als provides an NTRIP stream to other local devices.
+Conversing WAN bandwidth to the boat, str2str also provides a TCPIP NTRIP server to other local devices.
 
 See str2str.sh for connection details.
 
