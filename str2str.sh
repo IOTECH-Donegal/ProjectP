@@ -1,7 +1,7 @@
 #!/bin/bash
 # by: JOR
 # Date: 12FEB22
-# Function: Gets NTIP from remote and forwards to local serial port, also acts as an RTCM TCP server
+# Function: Gets NTRIP from remote and forwards to local serial port, also acts as an RTCM TCP server
 # Leave this script in /home/pi
 # Script: str2str.sh
 
