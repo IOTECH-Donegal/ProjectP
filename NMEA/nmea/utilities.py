@@ -2,12 +2,17 @@ import socket
 
 
 def mc_sender(mcast_if_ip, mcast_grp, mcast_port, message):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
-    s.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(mcast_if_ip))
-    s.sendto(message, (mcast_grp, mcast_port))
-
+    this_function = 'mc_sender'
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+        s.setsockopt(socket.SOL_IP, socket.IP_MULTICAST_IF, socket.inet_aton(mcast_if_ip))
+        s.sendto(message, (mcast_grp, mcast_port))
+    except socket.error as e:
+        print(f'Error {e} in nmea utilities, function {this_function}')
+        exit(-1)
 
 def ip_validator(IPv4):
+    this_function = 'ip_validator'
     try:
         socket.inet_aton(IPv4)
     except socket.error:
