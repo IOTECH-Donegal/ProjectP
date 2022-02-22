@@ -112,8 +112,7 @@ try:
                             # Processed the old heading, reset the flag
                             myUBX.new_heading = 0
                             # Send the heading to a multicast address
-                            #udp_sender(MCAST_GRP, MCAST_PORT, bytes(nmea_full_hdt, 'utf-8'))
-                            mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_hdt)
+                            mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, nmea_full_hdt.encode())
                     else:
                         print('Bad CRC')
             else:
