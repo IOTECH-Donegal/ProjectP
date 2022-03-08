@@ -4,5 +4,5 @@ MCSERVER = {
     "PORT1": 5001,
     "PORT2": 5002,
     "PORT3": 5003,
-    "SERIALPORT": 'COM5'
+    "SERIALPORT": '/dev/ttyUSB0'
 }
