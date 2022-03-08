@@ -44,9 +44,13 @@ try:
                 nmea_full_string = nmea_full_bytes.decode("latin-1")
                 # Check for corrupted lines
                 if nmea_full_string.isascii():
+                    # Log NMEA text string
                     nmea_output_file.writelines(nmea_full_string)
-                    # Send a multicast of the sentence
-                    mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
+                    # Send a multicast of the GGA sentence only
+                    list_of_values = nmea_full_string.split(',')
+                    sentence_id = list_of_values[0][2:]
+                    if sentence_id == 'GGA':
+                        mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
                     # Force OS to write each line, not to buffer
                     nmea_output_file.flush()
                     print(f'NMEA: Received {nmea_full_string.strip()}')
