@@ -5,7 +5,7 @@
 # Leave this script in /home/pi
 # Script: str2str.sh
 
-HOMEPATH="/home/pi"
+HOMEPATH="/home/pi/ProjectP"
 
 # Configure hardware serial port
 stty -F /dev/ttyAMA1 clocal raw speed 115200

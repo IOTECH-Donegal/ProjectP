@@ -8,7 +8,10 @@ from nmea.utilities import mc_sender, ip_validator
 from utilities.file import log_file_name as log_file_name
 
 # Get all the settings for this programme
-import settings.sensors as settings
+#import settings.sensors as settings
+import Settings.NMEA as settings
+
+
 this_programme = settings.NMEABASESENSOR['PROG']
 MCAST_GRP = settings.NMEABASESENSOR["MCAST_GROUP"]
 MCAST_PORT = settings.NMEABASESENSOR["MCAST_PORT"]
