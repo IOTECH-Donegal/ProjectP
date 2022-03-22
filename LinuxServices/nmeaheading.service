@@ -1,0 +1,13 @@
+[Unit]
+Description=NMEA Heading Service
+After=multi-user.target
+
+[Service]
+Type=idle
+User=pi
+WorkingDirectory=/home/pi/ProjectP/NMEA
+ExecStart=/usr/bin/python3 /home/pi/ProjectP/NMEA/NMEAHeadingSensor.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

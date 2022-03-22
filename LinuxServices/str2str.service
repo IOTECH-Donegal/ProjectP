@@ -1,0 +1,12 @@
+[Unit]
+Description=NTRIP Service
+After=multi-user.target
+
+[Service]
+Type=idle
+User=pi
+ExecStart=/home/pi/str2str.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
