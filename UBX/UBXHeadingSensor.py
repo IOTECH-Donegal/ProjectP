@@ -16,7 +16,7 @@ import sys
 
 # Utilities used by all UBX tools
 import ubx.Sensors
-from ubx.utilities import ubx_crc, log_file_name, mc_sender, ip_validator
+from ubx.utilities import ubx_crc, log_file_name, mc_sender, ip_validator, udp_sender
 from ubx.UBXParser import UBXParser
 
 # Get all the settings for this programme
@@ -25,8 +25,8 @@ this_programme = settings.UBXHEADINGSENSOR['PROG']
 MCAST_GRP = settings.UBXHEADINGSENSOR["MCAST_GROUP"]
 MCAST_PORT = settings.UBXHEADINGSENSOR["MCAST_PORT"]
 SERIAL_DEVICE = settings.UBXHEADINGSENSOR["SERIAL_DEVICE"]
-MY_IPv4_ADDRESS = settings.UBXHEADINGSENSOR["MY_IPv4_ADDRESS"]
-ip_validator(MY_IPv4_ADDRESS)
+#MY_IPv4_ADDRESS = settings.UBXHEADINGSENSOR["MY_IPv4_ADDRESS"]
+#ip_validator(MY_IPv4_ADDRESS)
 
 # Get the NMEA sentence class
 from nmea.hdt import hdt
@@ -38,7 +38,7 @@ myUBX = UBXParser()
 # Get a logfile name for UBX
 ubx_log_file = './logfiles/' + log_file_name('.ubx')
 
-print(f'***** {this_programme} with an adpater address of {MY_IPv4_ADDRESS} *****')
+print(f'***** {this_programme} *****')
 print(f'Accepts UBX from serial port {SERIAL_DEVICE}')
 print('1. Extracts information and logs raw UBX')
 print(f'2. Outputs to a multicast address {MCAST_GRP}:{MCAST_PORT} for other applications to use.')
@@ -112,7 +112,8 @@ try:
                             # Processed the old heading, reset the flag
                             myUBX.new_heading = 0
                             # Send the heading to a multicast address
-                            mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, nmea_full_hdt.encode())
+                            # mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, nmea_full_hdt.encode())
+                            udp_sender(MCAST_GRP, MCAST_PORT, nmea_full_hdt.encode())
                     else:
                         print('Bad CRC')
             else:
