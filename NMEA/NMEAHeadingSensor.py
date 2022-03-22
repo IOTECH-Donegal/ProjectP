@@ -1,6 +1,6 @@
 import serial
 import sys
-from nmea.utilities import mc_sender, ip_validator
+from nmea.utilities import mc_sender, ip_validator, udp_sender
 
 # Utilities used for file handling and logging
 from utilities.file import log_file_name as log_file_name
@@ -52,7 +52,8 @@ try:
                     list_of_values = nmea_full_string.split(',')
                     sentence_id = list_of_values[0][2:]
                     if sentence_id == 'GGA':
-                        mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
+                        #mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
+                        udp_sender(MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
                     # Force OS to write each line, not to buffer
                     nmea_output_file.flush()
                     print(f'NMEA: Received {nmea_full_string.strip()}')

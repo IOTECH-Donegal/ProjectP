@@ -12,8 +12,8 @@ this_programme = settings.NMEABASESENSOR['PROG']
 MCAST_GRP = settings.NMEABASESENSOR["MCAST_GROUP"]
 MCAST_PORT = settings.NMEABASESENSOR["MCAST_PORT"]
 SERIAL_DEVICE = settings.NMEABASESENSOR["SERIAL_DEVICE"]
-MY_IPv4_ADDRESS = settings.NMEABASESENSOR["MY_IPv4_ADDRESS"]
-ip_validator(MY_IPv4_ADDRESS)
+#MY_IPv4_ADDRESS = settings.NMEABASESENSOR["MY_IPv4_ADDRESS"]
+#ip_validator(MY_IPv4_ADDRESS)
 
 # NMEA Log File
 nmea_log_file_name = './base/' + log_file_name('.nmea')
@@ -52,6 +52,7 @@ try:
                     list_of_values = nmea_full_string.split(',')
                     sentence_id = list_of_values[0][2:]
                     if sentence_id == 'GGA':
+                        # Use mc_sender for a specific interface
                         #mc_sender(MY_IPv4_ADDRESS, MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
                         udp_sender(MCAST_GRP, MCAST_PORT, b"\x24" + nmea_full_bytes)
                     # Force OS to write each line, not to buffer
