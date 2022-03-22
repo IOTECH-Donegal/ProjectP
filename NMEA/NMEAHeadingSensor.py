@@ -13,15 +13,15 @@ this_programme = settings.NMEAHEADINGSENSOR['PROG']
 MCAST_GRP = settings.NMEAHEADINGSENSOR["MCAST_GROUP"]
 MCAST_PORT = settings.NMEAHEADINGSENSOR["MCAST_PORT"]
 SERIAL_DEVICE = settings.NMEAHEADINGSENSOR["SERIAL_DEVICE"]
-MY_IPv4_ADDRESS = settings.NMEAHEADINGSENSOR["MY_IPv4_ADDRESS"]
-ip_validator(MY_IPv4_ADDRESS)
+#MY_IPv4_ADDRESS = settings.NMEAHEADINGSENSOR["MY_IPv4_ADDRESS"]
+#ip_validator(MY_IPv4_ADDRESS)
 
 # NMEA Log File
 nmea_log_file_name = './base/' + log_file_name('.nmea')
 # Open the file for append
 nmea_output_file = open(nmea_log_file_name, 'a', newline='')
 
-print(f'***** {this_programme} with an adpater address of {MY_IPv4_ADDRESS} *****')
+print(f'***** {this_programme} *****')
 print('Accepts NMEA from a serial port:')
 print('1. Extracts information and logs raw NMEA')
 print(f'2. Outputs to a multicast address {MCAST_GRP}:{MCAST_PORT} for other applications to use.')
