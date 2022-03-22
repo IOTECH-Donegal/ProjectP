@@ -4,13 +4,10 @@ import sys
 # Utilities for any NMEA script
 from nmea.utilities import mc_sender, ip_validator
 
-# Utilities used for file handling and logging
 from utilities.file import log_file_name as log_file_name
 
 # Get all the settings for this programme
-#import settings.sensors as settings
-import Settings.NMEA as settings
-
+import settings.sensors as settings
 
 this_programme = settings.NMEABASESENSOR['PROG']
 MCAST_GRP = settings.NMEABASESENSOR["MCAST_GROUP"]
