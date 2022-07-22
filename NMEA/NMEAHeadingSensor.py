@@ -17,7 +17,7 @@ SERIAL_DEVICE = settings.NMEAHEADINGSENSOR["SERIAL_DEVICE"]
 #ip_validator(MY_IPv4_ADDRESS)
 
 # NMEA Log File
-nmea_log_file_name = './base/' + log_file_name('.nmea')
+nmea_log_file_name = './heading/' + log_file_name('.nmea')
 # Open the file for append
 nmea_output_file = open(nmea_log_file_name, 'a', newline='')
 
